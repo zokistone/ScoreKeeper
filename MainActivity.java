@@ -9,15 +9,55 @@ import com.example.android.scorekeeper.R;
 
 public class MainActivity extends AppCompatActivity {
 
+    static final String GOALS_TEAM_A_VALUE = "scoreA";
+    static final String FOULS_TEAM_A_VALUE = "foulsA";
+
+    static final String GOALS_TEAM_B_VALUE = "scoreB";
+    static final String FOULS_TEAM_B_VALUE = "foulsB";
+
     int goalsTeamA = 0;
     int foulsTeamA = 0;
     int goalsTeamB = 0;
     int foulsTeamB = 0;
 
+    TextView team_a_goals;
+    TextView team_a_fouls;
+    TextView team_b_goals;
+    TextView team_b_fouls;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        team_a_goals = (TextView) findViewById(R.id.team_a_goals);
+        team_a_fouls = (TextView) findViewById(R.id.team_a_fouls);
+        team_b_goals = (TextView) findViewById(R.id.team_b_goals);
+        team_b_fouls = (TextView) findViewById(R.id.team_b_fouls);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putInt(GOALS_TEAM_A_VALUE, goalsTeamA);
+        savedInstanceState.putInt(FOULS_TEAM_A_VALUE, foulsTeamA);
+        savedInstanceState.putInt(GOALS_TEAM_B_VALUE, goalsTeamB);
+        savedInstanceState.putInt(FOULS_TEAM_B_VALUE, foulsTeamB);
+
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        goalsTeamA = savedInstanceState.getInt(GOALS_TEAM_A_VALUE);
+        displayGoalsForTeamA(goalsTeamA);
+        foulsTeamA = savedInstanceState.getInt(FOULS_TEAM_A_VALUE);
+        displayFoulsForTeamA(foulsTeamA);
+        goalsTeamB = savedInstanceState.getInt(GOALS_TEAM_B_VALUE);
+        displayGoalsForTeamB(goalsTeamB);
+        foulsTeamB = savedInstanceState.getInt(FOULS_TEAM_B_VALUE);
+        displayFoulsForTeamB(foulsTeamB);
     }
 
     public void team_a_goals(View v) {
@@ -61,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void displayFoulsForTeamA(int foulsTeamA){
-    TextView scoreView = (TextView) findViewById(R.id.team_a_fouls);
+        TextView scoreView = (TextView) findViewById(R.id.team_a_fouls);
         scoreView.setText(String.valueOf(foulsTeamA));
     }
     /**
